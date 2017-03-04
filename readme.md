@@ -19,6 +19,7 @@
 ##### 效果展示(此图片为gif图,网络延迟会造成卡顿,刷新解决)
 
 ![效果展示1](https://github.com/Guanghsy2000/blog-app/blob/master/%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA/demo1.gif)
+##### 考虑网络原因,演示图片经过压缩,静态清晰图可以"效果展示"文件夹查看
 ![效果展示2](https://github.com/Guanghsy2000/blog-app/blob/master/%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA/demo2.gif)
 
 ##### method文件夹
