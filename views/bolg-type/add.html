@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Bolg后台分类新增</title>
+  <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style type="text/css">
+  body {
+    margin: 0;
+    height: 100%;
+    background-color: #F0F3F4;
+  }
+  
+  .btn-group {
+    margin: 20px 0;
+  }
+
+
+  .container .breadcrumb{
+    background-color: #F0F3F4;
+  }
+</style>
+
+<body>
+  <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="#">博客分类信息</a></li>
+      <li><a href="/bolg-type/list">博客分类管理</a></li>
+      <li class="active">博客分类新增</li>
+    </ol>
+    <form class="form-horizontal" role="form" method="post" action="/bolg-type/add">
+      <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">分类</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" placeholder="请输入分类" name="sort">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputPassword3" class="col-sm-2 control-label">备注</label>
+        <div class="col-sm-10">
+          <textarea name="remind" class="form-control"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary btn-block">提交</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+
+
+
+  <script src="http://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+  <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+
+</html>

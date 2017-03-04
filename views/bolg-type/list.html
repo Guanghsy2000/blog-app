@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Bolg分类管理</title>
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<style type="text/css">
+    body {
+        margin: 0;
+        height: 100%;
+        background-color: #F0F3F4;
+    }
+    
+    .search {
+        margin: 40px 0;
+    }
+    
+    .container .breadcrumb {
+        background-color: #F0F3F4;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="#">博客分类信息</a></li>
+            <li class="active">博客分类管理</li>
+        </ol>
+        <div class="row search">
+            <div class="col-md-6">
+                <form method="get" action="/bolg-type/list">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="请输入分类名称进行搜索" name="search">
+                        <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                        <span class="glyphicon glyphicon-search">
+
+                        </span>
+                        </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <div class="btn-group pull-right">
+                    <a type="button" class="btn btn-danger" href="/bolg-type/add">新增</a>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr class="danger">
+                    <th>序号</th>
+                    <th>分类</th>
+                    <th>备注</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{each list as item}}
+                <tr>
+                    <td>{{$index + 1}}</td>
+                    <td>{{item.sort}}</td>
+                    <td>{{item.remind}}</td>
+                    <td id="operation">
+                        <!--operation操作-->
+                        <a href="/bolg-type/update/{{item.id}}">
+                            <span class="glyphicon glyphicon-cog"></span>
+                        </a>
+                        <a data-wipe-id='{{item.id}}'>
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+    <script src="http://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/main/vendor/layer/layer.js"></script>
+    <script>
+        // 通过id删除分类信息
+        $('#operation a[data-wipe-id]').click(function () {
+            var id = {}
+            id._id = $(this).data('wipe-id')
+            layer.confirm('确定要删除此分类吗?', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                layer.msg('该分类已经删除', { time: 1000 },
+                    $.post('/bolg-type/remove/' + id._id, function (res) {
+                        location.href = '/bolg-type/list'
+                    })
+
+                );
+
+            }, function () {
+                layer.msg('您已取消删除操作', {
+                    time: 1000, //1s后自动关闭
+                });
+            });
+        })
+    </script>
+</body>
+
+</html>

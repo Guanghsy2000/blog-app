@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Bolg内容管理</title>
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<style type="text/css">
+    body {
+        margin: 0;
+        height: 100%;
+        background-color: #F0F3F4;
+    }
+    
+    .img1 {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .search {
+        margin: 40px 0;
+    }
+
+    /*序号*/
+    #bolg-table td:nth-child(1) {
+        width: 5%;
+    }
+    /*缩略图*/
+    #bolg-table td:nth-child(2) {
+        width: 10%;
+    }
+    /*标题*/
+    #bolg-table td:nth-child(3) {
+        width: 17%;
+    }
+    /*分类*/
+    #bolg-table td:nth-child(4) {
+        width: 10%;
+    }
+    /*简介*/
+    #bolg-table td:nth-child(5) {
+        width: 25%;
+    }
+    /*标签*/
+    #bolg-table td:nth-child(6) {
+        width: 20%;
+    }
+    /*操作*/
+    #bolg-table td:nth-child(7) {
+        width: 8%;
+    }
+    
+    .container .breadcrumb {
+        background-color: #F0F3F4;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="#">博客内容信息</a></li>
+            <li class="active">博客内容管理</li>
+        </ol>
+        <div class="row search">
+            <div class="col-md-6">
+                 <!--查询功能-->
+                <form method="get" action="/bolg-content/list">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="请输入标签进行搜索" name="search">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <span class="glyphicon glyphicon-search">
+                            </span>
+                        </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <div class="btn-group pull-right">
+                    <a type="button" class="btn btn-danger" href="/bolg-content/add">新增</a>
+                </div>
+            </div>
+        </div>
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr class="danger">
+                    <th>序号</th>
+                    <th>缩略图</th>
+                    <th>标题</th>
+                    <th>分类</th>
+                    <th>简介</th>
+                    <th>标签</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{each data as item}}
+                <tr id="bolg-table">
+
+                    <td class="bolg-index">{{$index + 1}}</td>
+                    <td class="bolg-img">
+                        <a href=""><img class="img1" src="/image/{{item.img}}" alt=""> </td>
+                    <td class="bolg-title"><a href="">{{item.title}}</a></td>
+                    <td class="bolg-sort">{{item.sort}}</td>
+                    <td class="bolg-synopsis">
+                        <p style="height:100px;overflow: hidden;">{{item.synopsis}}</p>
+                    </td>
+                    <td class="bolg-label">{{item.label}}</td>
+                    <td id='operation'>
+                        <a href="/bolg-content/update/{{item.id}}">
+                            <span class="glyphicon glyphicon-cog"></span>
+                        </a>
+                        <a data-wipe-id='{{item.id}}'>
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+
+    <script src="http://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/main/vendor/layer/layer.js"></script>
+    <script>
+        // 删除时弹出弹出层
+        $('#operation a[data-wipe-id]').click(function () {
+            var id = {}
+            id._id = $(this).data('wipe-id')
+            layer.confirm('确定要删除此内容吗?', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                layer.msg('该内容已经删除', { time: 1000 },
+                    $.post('/bolg-content/remove/' + id._id, function (res) {
+                        location.href = '/bolg-content/list'
+                    })
+
+                );
+
+            }, function () {
+                layer.msg('您已取消删除操作', {
+                    time: 1000, //1s后自动关闭
+                });
+            });
+        })
+    </script>
+</body>
+
+</html>
